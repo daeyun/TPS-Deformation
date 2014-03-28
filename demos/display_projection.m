@@ -9,11 +9,6 @@ set(gca, 'CameraPosition', [400 -400 400]);
 [X, Y] = meshgrid(-1:0.1:1, -1:0.1:1);
 Z = zeros(21);
 
-% Z = exp((-X.^2 - Y.^2)*10);
-% Z = Z + exp((-(X+0.45).^2 - (Y+0.45).^2)*10);
-
-surface(X, Y, Z);
-
 p1 = [0, 0, 0];
 p2 = [0.5, 0.5, 0];
 p3 = [0.5, -0.5, 0];
@@ -24,7 +19,7 @@ dp2 = [0.1, 0.15, 0];
 dp3 = [-0.2, 0.15, 0];
 dpoints = [dp1; dp2; dp3];
 
-
+surface(X, Y, Z);
 drawPoint3d(points, 'color', 'blue');
 drawPoint3d(points + dpoints, 'color', 'red');
 
