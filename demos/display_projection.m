@@ -1,3 +1,5 @@
+% requires geom2d and geom3d
+
 figure(1); clf; hold on;
 axis equal;
 axis([-1 1 -1 1 -1 1]);
@@ -11,6 +13,7 @@ Z = zeros(21);
 % Z = Z + exp((-(X+0.45).^2 - (Y+0.45).^2)*10);
 
 surface(X, Y, Z);
+
 p1 = [0, 0, 0];
 p2 = [0.5, 0.5, 0];
 p3 = [0.5, -0.5, 0];
@@ -25,9 +28,7 @@ dpoints = [dp1; dp2; dp3];
 drawPoint3d(points, 'color', 'blue');
 drawPoint3d(points + dpoints, 'color', 'red');
 
-
 drawEdge(horzcat(points, points + dpoints), 'color', 'r', 'linewidth', 2);
-
 
 dp1_ = [0.1, -0.1, 0.1];
 dp2_ = [0.1, -0.1, 0.1];
