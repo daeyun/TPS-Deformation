@@ -35,7 +35,7 @@ function [ fX, fY, fZ ] = deform_surface(X, Y, Z, control_points, mapping_coeffs
         control_point_mat = repmat(reshape(control_points(i, :), [1 1 3]), [h w 1]);
 
         % Euclidean distance
-        r_mat = sum((mesh_mat - control_point_mat).^2, 3).^(0.5);
+        r_mat = sqrt(sum((mesh_mat - control_point_mat).^2, 3));
 
         % Gaussian radial basis function
         radial_basis_mat = repmat(exp(-(epsilon*r_mat).^2),[1 1 3]);
