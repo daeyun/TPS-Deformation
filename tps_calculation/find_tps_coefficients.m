@@ -2,8 +2,8 @@
 % their displacements, compute the mapping coefficients needed for the
 % surface deformation function f(S).
 %
-% Usage:    [w, a] = find_tps_coefficients(surface, control_points, ...
-%                    displacemets);
+% Usage:    [mapping_coeffs, tps_weights] = ...
+%               find_tps_coefficients(surface, control_points, displacemets);
 %
 % Arguments:
 %           surface        - n by d vector of surface points where d is the
@@ -14,14 +14,14 @@
 %                            function f(S).
 %
 % Returns:
-%           w              - p by d vector of mapping coefficients.
-%           a              - n by d+1 vector of TPS polynomial weights.
+%           mapping_coeffs - p by d vector of mapping coefficients.
+%           tps_weights    - n by d+1 vector of TPS polynomial weights.
 %
 % Author:
 % Daeyun Shin
 % dshin11@illinois.edu  daeyunshin.com
 %
 % April 2014
-function [w, a] = find_tps_coefficients(surface, control_points, displacements)
+function [mapping_coeffs, tps_weights] = find_tps_coefficients(surface, control_points, displacements)
     
 end
