@@ -21,7 +21,7 @@
 % Daeyun Shin
 % dshin11@illinois.edu  daeyunshin.com
 %
-% March 2014
+% April 2014
 function [w, a] = find_tps_coefficients(surface, control_points, displacements)
     
 end
