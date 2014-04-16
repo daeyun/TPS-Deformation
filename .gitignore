@@ -1,3 +1,12 @@
 .DS_Store
 *~
 *.swp
+
+# Windows default autosave extension
+*.asv
+
+# Compiled MEX binaries (all platforms)
+*.mex*
+
+# Simulink Code Generation
+slprj/
