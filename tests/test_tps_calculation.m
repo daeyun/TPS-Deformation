@@ -75,7 +75,7 @@ end
 function test_deform_surface_tps_implementation(X, Y, Z, cpoints, disps, cpoint_sub)
 
 [mapping_coeffs, poly_coeffs] = ...
-    find_tps_coefficients(cpoints, disps);
+    find_tps_coefficients(cpoints, disps, 0);
 
 % n by 3 vector containing n 3D points
 surface = [reshape(X, [], 1), reshape(Y, [], 1), reshape(Z, [], 1)];
@@ -103,7 +103,7 @@ end
 function test_deform_surface_tps(X, Y, Z, cpoints, disps, cpoint_sub)
 
 [mapping_coeffs, poly_coeffs] = ...
-    find_tps_coefficients(cpoints, disps);
+    find_tps_coefficients(cpoints, disps, 0);
 
 [fX, fY, fZ] = deform_surface_tps(X, Y, Z, cpoints, ...
     mapping_coeffs, poly_coeffs);

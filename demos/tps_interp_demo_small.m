@@ -20,7 +20,7 @@ drawPoint3d(control_points, 'color', 'blue');
 drawPoint3d(control_points + displacements, 'color', 'red');
 
 [mapping_coeffs, poly_coeffs] = ...
-    find_tps_coefficients(control_points, displacements);
+    find_tps_coefficients(control_points, displacements, 0);
 
 [fX, fY, fZ] = deform_surface_tps(X, Y, Z, control_points, mapping_coeffs, poly_coeffs);
 
