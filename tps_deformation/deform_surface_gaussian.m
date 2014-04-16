@@ -1,7 +1,9 @@
-% DEFORM_SURFACE - Given a set of control points and mapping coefficients,
-%                  compute a deformed surface.
+% DEFORM_SURFACE_GAUSSIAN - Given a set of control points and mapping
+% coefficients, compute a deformed surface f(x) [1] using a Gaussian radial
+% basis function phi(r) as shown in [2].
 %
-% Usage:    [fX, fY, fZ] = deform_surface(X, Y, Z, control_points, mapping_coeffs, epsilon)
+% Usage:    [fX, fY, fZ] = deform_surface_gaussian(X, Y, Z, control_points, ...
+%           mapping_coeffs, epsilon)
 %
 % Arguments:
 %           X, Y, Z        - X, Y, Z components of the surface.
@@ -15,13 +17,17 @@
 % Returns:
 %           fX, fY, fZ     - X, Y, Z components of the deformed surface.
 %
+% References:
+%           1. http://en.wikipedia.org/wiki/Thin_plate_spline#Radial_basis_function
+%           2. http://en.wikipedia.org/wiki/Radial_basis_function
+%
 % Author:
 % Daeyun Shin
 % dshin11@illinois.edu  daeyunshin.com
 %
 % March 2014
 
-function [ fX, fY, fZ ] = deform_surface(X, Y, Z, control_points, mapping_coeffs, epsilon)
+function [ fX, fY, fZ ] = deform_surface_gaussian(X, Y, Z, control_points, mapping_coeffs, epsilon)
     assert(isequal(size(X), size(Y)) && isequal(size(Y), size(Z)), ...
         'size(X) must equal size(Y) and size(Z).');
     assert(isequal(size(control_points), size(mapping_coeffs)), ...

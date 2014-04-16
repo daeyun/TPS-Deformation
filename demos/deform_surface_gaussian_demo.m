@@ -1,4 +1,9 @@
-% requires geom2d and geom3d
+% Deform a surface f(x) [1] using a Gaussian radial basis function phi(r) is as
+% shown in [2].
+%
+% References:
+%       1. http://en.wikipedia.org/wiki/Thin_plate_spline#Radial_basis_function
+%       2. http://en.wikipedia.org/wiki/Radial_basis_function
 
 figure(1); clf; hold on;
 axis equal;
@@ -23,7 +28,7 @@ mc4 = [0.1, -0.15, -0.1];
 mc5 = [0.2, 0.05, 0.1];
 mapping_coeffs = [mc1; mc2; mc3; mc4; mc5];
 
-[X, Y, Z] = deform_surface(X, Y, Z, control_points, mapping_coeffs, 3);
+[X, Y, Z] = deform_surface_gaussian(X, Y, Z, control_points, mapping_coeffs, 3);
 
 surface(X, Y, Z);
 
