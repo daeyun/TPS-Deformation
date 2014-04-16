@@ -1,4 +1,5 @@
-% requires geom2d and geom3d
+% Show TPS interpolation and deformation given a minimum number (4) of control
+% points.
 
 figure(1); clf; hold on;
 axis equal;

@@ -1,4 +1,5 @@
-% requires geom2d and geom3d
+% Compute TPS interpolation and deform the surface given all points on the
+% surface as control points.
 
 figure(1); clf; hold on;
 axis equal;

@@ -1,4 +1,4 @@
-% requires geom2d and geom3d
+% Display lines in 3D space perpendicular to the viewing angle.
 
 figure(1); clf; hold on;
 axis equal;
