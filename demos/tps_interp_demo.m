@@ -2,7 +2,7 @@
 % the surface with the computed mapping coefficients.
 
 % number of randomly chosen control points
-n_control_points = 10;
+n_control_points = 20;
 
 
 figure(1); clf; hold on;
@@ -32,11 +32,6 @@ drawPoint3d(control_points, 'color', 'blue');
 drawPoint3d(control_points + displacements, 'color', 'red');
 drawEdge([control_points control_points+displacements], 'color', 'r', 'linewidth', 2);
 
-[mapping_coeffs, poly_coeffs] = ...
-    find_tps_coefficients(control_points, displacements)
-
-[fX, fY, fZ] = deform_surface_tps(X, Y, Z, control_points, mapping_coeffs, poly_coeffs);
-
 surface(X, Y, Z)
 
 
@@ -50,5 +45,27 @@ drawPoint3d(control_points, 'color', 'blue');
 drawPoint3d(control_points + displacements, 'color', 'red');
 drawEdge([control_points control_points+displacements], 'color', 'r', 'linewidth', 2);
 
+
+[mapping_coeffs, poly_coeffs] = ...
+    find_tps_coefficients(control_points, displacements, 0);
+
+[fX, fY, fZ] = deform_surface_tps(X, Y, Z, control_points, mapping_coeffs, poly_coeffs);
+
+surface(fX, fY, fZ);
+
+figure(3); clf; hold on;
+axis equal;
+axis([-1 1 -1 1 -1 1]);
+set(gcf, 'renderer', 'opengl');
+set(gca, 'CameraPosition', [-400 400 200]);
+
+drawPoint3d(control_points, 'color', 'blue');
+drawPoint3d(control_points + displacements, 'color', 'red');
+drawEdge([control_points control_points+displacements], 'color', 'r', 'linewidth', 2);
+
+[mapping_coeffs, poly_coeffs] = ...
+    find_tps_coefficients(control_points, displacements, 0.3);
+
+[fX, fY, fZ] = deform_surface_tps(X, Y, Z, control_points, mapping_coeffs, poly_coeffs);
 
 surface(fX, fY, fZ);
