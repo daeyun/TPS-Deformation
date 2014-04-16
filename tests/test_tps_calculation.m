@@ -1,3 +1,5 @@
+function test_tps_calculation()
+%% setup
 X = [[-0.4 -0.4 -0.4]; [0    0   0]; [ 0.1  0.1  0.1]];
 Y = [[-0.4    0  0.4]; [-0.4 0 0.4]; [-0.4  0    0.4]];
 Z = [[0.5   0.5  0.5]; [0    0   0]; [-0.3 -0.3 -0.3]];
@@ -8,16 +10,27 @@ cpoints = horzcat( ...
     X(sub2ind(size(X), cpoint_sub(:,1), cpoint_sub(:,2))), ...
     Y(sub2ind(size(X), cpoint_sub(:,1), cpoint_sub(:,2))), ...
     Z(sub2ind(size(X), cpoint_sub(:,1), cpoint_sub(:,2))));
+% same as:
 % cpoints =  [[ 0     0     0];
 %             [-0.4   0     0.5];
 %             [ 0     0.4   0];
 %             [ 0.1   0.4  -0.3]];
 % assert(isequal(cpoints, cpoints2))
 
-displacements = [[-0.2 0   0];
-                 [ 0.2 0   0];
-                 [ 0.1 0.1 0];
-                 [ 0.1 0.1 0]];
+disps = [[-0.2 0   0];
+         [ 0.2 0   0];
+         [ 0.1 0.1 0];
+         [ 0.1 0.1 0]];
+
+
+%% run tests
+test_tps_linear_equations(cpoints, disps);
+test_deform_surface_tps_implementation(X, Y, Z, cpoints, disps, cpoint_sub);
+test_deform_surface_tps(X, Y, Z, cpoints, disps, cpoint_sub);
+
+end
+
+function test_tps_linear_equations(cpoints, disps)
 
 A = pairwise_radial_basis(cpoints, cpoints);
 
@@ -45,7 +58,7 @@ assert(isequal(V(:,1), [1;cpoints(1,:)']), ...
 assert(isequal(V(:,2), [1;cpoints(2,:)']), ...
     'V(:, 2) must contain [1; C2x, C2y, C2z].');
 
-y = cpoints + displacements;
+y = cpoints + disps;
 
 M = [[A, V']; [V, zeros(d+1, d+1)]];
 Y = [y;zeros(d+1, d)];
@@ -54,30 +67,15 @@ X = M\Y;
 
 assert(norm(M*X - Y) < 0.01, 'M*X must be close to Y.');
 
-mapping_coeffs = X(1:end-(d+1),:);
-poly_coeffs = X((end-d):end,:);
+% mapping_coeffs = X(1:end-(d+1),:);
+% poly_coeffs = X((end-d):end,:);
 
+end
 
-%% test deform_surface_tps()
-
-X = [[-0.4 -0.4 -0.4]; [0    0   0]; [ 0.1  0.1  0.1]];
-Y = [[-0.4    0  0.4]; [-0.4 0 0.4]; [-0.4  0    0.4]];
-Z = [[0.5   0.5  0.5]; [0    0   0]; [-0.3 -0.3 -0.3]];
-
-cpoint_sub = [[2 2]; [1 2]; [2 3]; [3 3]];
-
-cpoints = horzcat( ...
-    X(sub2ind(size(X), cpoint_sub(:,1), cpoint_sub(:,2))), ...
-    Y(sub2ind(size(X), cpoint_sub(:,1), cpoint_sub(:,2))), ...
-    Z(sub2ind(size(X), cpoint_sub(:,1), cpoint_sub(:,2))));
-
-displacements = [[-0.2 0   0];
-                 [ 0.2 0   0];
-                 [ 0.1 0.1 0];
-                 [ 0.1 0.1 0]];
+function test_deform_surface_tps_implementation(X, Y, Z, cpoints, disps, cpoint_sub)
 
 [mapping_coeffs, poly_coeffs] = ...
-    find_tps_coefficients(cpoints, displacements);
+    find_tps_coefficients(cpoints, disps);
 
 % n by 3 vector containing n 3D points
 surface = [reshape(X, [], 1), reshape(Y, [], 1), reshape(Z, [], 1)];
@@ -97,30 +95,15 @@ deformed_points = horzcat( ...
     fY(sub2ind(size(X), cpoint_sub(:,1), cpoint_sub(:,2))), ...
     fZ(sub2ind(size(X), cpoint_sub(:,1), cpoint_sub(:,2))));
 
-assert(norm(deformed_points - (cpoints + displacements)) < 0.01, ...
-    'Deformed control_points must be close to control_points+displacements');
+assert(norm(deformed_points - (cpoints + disps)) < 0.01, ...
+    'Deformed control_points must be close to control_points+disps');
 
+end
 
-%% test deform_surface_tps()
-
-X = [[-0.4 -0.4 -0.4]; [0    0   0]; [ 0.1  0.1  0.1]];
-Y = [[-0.4    0  0.4]; [-0.4 0 0.4]; [-0.4  0    0.4]];
-Z = [[0.5   0.5  0.5]; [0    0   0]; [-0.3 -0.3 -0.3]];
-
-cpoint_sub = [[2 2]; [1 2]; [2 3]; [3 3]];
-
-cpoints = horzcat( ...
-    X(sub2ind(size(X), cpoint_sub(:,1), cpoint_sub(:,2))), ...
-    Y(sub2ind(size(X), cpoint_sub(:,1), cpoint_sub(:,2))), ...
-    Z(sub2ind(size(X), cpoint_sub(:,1), cpoint_sub(:,2))));
-
-displacements = [[-0.2 0   0];
-                 [ 0.2 0   0];
-                 [ 0.1 0.1 0];
-                 [ 0.1 0.1 0]];
+function test_deform_surface_tps(X, Y, Z, cpoints, disps, cpoint_sub)
 
 [mapping_coeffs, poly_coeffs] = ...
-    find_tps_coefficients(cpoints, displacements);
+    find_tps_coefficients(cpoints, disps);
 
 [fX, fY, fZ] = deform_surface_tps(X, Y, Z, cpoints, ...
     mapping_coeffs, poly_coeffs);
@@ -130,5 +113,7 @@ deformed_points = horzcat( ...
     fY(sub2ind(size(X), cpoint_sub(:,1), cpoint_sub(:,2))), ...
     fZ(sub2ind(size(X), cpoint_sub(:,1), cpoint_sub(:,2))));
 
-assert(norm(deformed_points - (cpoints + displacements)) < 0.01, ...
-    'Deformed control_points must be close to control_points+displacements');
+assert(norm(deformed_points - (cpoints + disps)) < 0.01, ...
+    'Deformed control_points must be close to control_points+disps');
+
+end
