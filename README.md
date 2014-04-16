@@ -15,7 +15,7 @@ Usage:  `[mapping_coeffs, poly_coeffs] =
 
 #### Figure 1: Input data
 
-<img src="docs/img/3d_surface.png" width="50%" height="50%" />
+<img src="docs/img/3d_surface2.png" width="50%" height="50%" />
 
 ## Deformation
 
@@ -26,16 +26,23 @@ This basically is a 3D version of the function y(x) on this page:
 - Polynomial coefficients: weights **v** of the polynomial. Example: in 3D,
     v1 + v2 \* x + v3 \* y + v4 \* z.
 - Control points: same as above.
+- Lambda: regularization parameter. See page 4 of http://cseweb.ucsd.edu/~sjb/pami_tps.pdf
 
 Usage: `[fX, fY, fZ] = deform_surface_tps(X, Y, Z, control_points,
              mapping_coeffs, poly_coeffs)`
 
 #### Figure 2: Result
 
-Result of `demos/tps_interp_demo.m` using 10 randomly chosen control points and
+Output of `demos/tps_interp_demo.m` using 20 randomly chosen control points and
 displacements.
 
-<img src="docs/img/deformed_3d_surface.png" width="50%" height="50%" />
+##### Exact interpolation (lambda = 0)
+
+<img src="docs/img/3d_surface2_deformed.png" width="50%" height="50%" />
+
+##### Regularized interpolation (lambda = 0.2)
+
+<img src="docs/img/3d_surface2_deformed_regularized.png" width="50%" height="50%" />
 
 ## Documentation
 
