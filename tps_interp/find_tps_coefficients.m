@@ -3,13 +3,14 @@
 % deforming surface S.
 %
 % Usage:    [mapping_coeffs, poly_coeffs] = ...
-%               find_tps_coefficients(control_points, displacemets);
+%             find_tps_coefficients(control_points, displacemets, lambda);
 %
 % Arguments:
 %           control_points - p by d vector of control points.
 %           displacemets   - p by d vector of displacements of
 %                            corresponding control points in the mapping
 %                            function f(S).
+%           lambda         - regularization parameter. See page 4 of [3].
 %
 % Returns:
 %           mapping_coeffs - p by d vector of TPS mapping coefficients.
@@ -17,7 +18,8 @@
 %
 % References:
 %           1. http://en.wikipedia.org/wiki/Polyharmonic_spline
-%           2. http://en.wikipedia.org/wiki/Thin_plate_spline 
+%           2. http://en.wikipedia.org/wiki/Thin_plate_spline
+%           3. http://cseweb.ucsd.edu/~sjb/pami_tps.pdf
 %
 % Author:
 % Daeyun Shin
@@ -25,7 +27,7 @@
 %
 % April 2014
 function [mapping_coeffs, poly_coeffs] = ...
-    find_tps_coefficients(control_points, displacements)
+    find_tps_coefficients(control_points, displacements, lambda)
 
 p = size(control_points, 1);
 d = size(control_points, 2);
@@ -35,6 +37,9 @@ assert(isequal(size(control_points), size(displacements)), ...
 
 % This correcponds to the matrix A from [1].
 A = pairwise_radial_basis(control_points, control_points);
+
+% Relax the exact interpolation requirement by means of regularization. [3]
+A = A + lambda * eye(size(A));
 
 % This correcponds to V from [1].
 V = [ones(p, 1), control_points]';
