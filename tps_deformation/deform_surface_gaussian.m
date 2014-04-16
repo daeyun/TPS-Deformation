@@ -3,7 +3,7 @@
 % basis function phi(r) as shown in [2].
 %
 % Usage:    [fX, fY, fZ] = deform_surface_gaussian(X, Y, Z, control_points, ...
-%           mapping_coeffs, epsilon)
+%               mapping_coeffs, epsilon)
 %
 % Arguments:
 %           X, Y, Z        - X, Y, Z components of the surface.

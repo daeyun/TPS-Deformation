@@ -3,7 +3,7 @@
 % deforming surface S.
 %
 % Usage:    [mapping_coeffs, poly_coeffs] = ...
-%           find_tps_coefficients(control_points, displacemets);
+%               find_tps_coefficients(control_points, displacemets);
 %
 % Arguments:
 %           control_points - p by d vector of control points.
