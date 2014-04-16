@@ -30,7 +30,7 @@ This basically is a 3D version of the function y(x) on this page:
 Usage: `[fX, fY, fZ] = deform_surface_tps(X, Y, Z, control_points,
              mapping_coeffs, poly_coeffs)`
 
-### Figure 2: Result
+#### Figure 2: Result
 
 Result of `demos/tps_interp_demo.m` using 10 randomly chosen control points and
 displacements.
