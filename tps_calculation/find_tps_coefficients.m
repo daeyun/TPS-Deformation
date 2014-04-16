@@ -33,17 +33,8 @@ d = size(control_points, 2);
 assert(isequal(size(control_points), size(displacements)), ...
     'ERROR: size(control_points) must equal size(displacements).');
 
-% r_mat(i, j) is the Euclidean distance between control_points(i, :) and
-% control_points(j, :).
-r_mat = pdist2(control_points, control_points);
-
-% Thin plate spline radial basis function phi(r) = r^2*log(r).
 % This correcponds to the matrix A from [1].
-A = zeros(size(r_mat));
-ge1_ind = r_mat>=1;
-lt1_ind = r_mat<1;
-A(ge1_ind) = r_mat(ge1_ind).^2 .* log(r_mat(ge1_ind));
-A(lt1_ind) = r_mat(lt1_ind) .* log(r_mat(lt1_ind).^r_mat(lt1_ind));
+A = pairwise_radial_basis(control_points, control_points);
 
 % This correcponds to V from [1].
 V = [ones(p, 1), control_points]';
