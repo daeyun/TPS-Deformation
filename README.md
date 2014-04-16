@@ -9,9 +9,10 @@ Compute thin plate spline interpolation and deformation on a 3D surface.
 (blue points on Figure 1 and 2).
 - Displacements: displacements of the interpolated control points
 (red edges on Figure 1 and 2).
+- Lambda: regularization parameter. See page 4 of http://cseweb.ucsd.edu/~sjb/pami_tps.pdf
 
 Usage:  `[mapping_coeffs, poly_coeffs] =
-             find_tps_coefficients(control_points, displacemets)`
+             find_tps_coefficients(control_points, displacemets, lambda)`
 
 #### Figure 1: Input data
 
@@ -26,7 +27,6 @@ This basically is a 3D version of the function y(x) on this page:
 - Polynomial coefficients: weights **v** of the polynomial. Example: in 3D,
     v1 + v2 \* x + v3 \* y + v4 \* z.
 - Control points: same as above.
-- Lambda: regularization parameter. See page 4 of http://cseweb.ucsd.edu/~sjb/pami_tps.pdf
 
 Usage: `[fX, fY, fZ] = deform_surface_tps(X, Y, Z, control_points,
              mapping_coeffs, poly_coeffs)`
