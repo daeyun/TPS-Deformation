@@ -4,8 +4,8 @@
 % Usage:    P = pairwise_radial_basis(A, B)
 %
 % Arguments:
-%           A - n by p vector containing n p-dimensional points. 
-%           B - n by q vector containing n q-dimensional points. 
+%           A - n by d vector containing n d-dimensional points. 
+%           B - m by d vector containing m d-dimensional points. 
 %
 % Returns:
 %           P - P(i, j) = phi(norm(A(i,:)-B(j,:))) where
